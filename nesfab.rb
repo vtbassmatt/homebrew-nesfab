@@ -8,12 +8,13 @@ class Nesfab < Formula
   sha256 "c98e1de362de0503b4a3ad313ccfbf02da0e1fba8056594e942f55b361e88b09"
   license "GPL-3.0-only"
 
+  depends_on "gcc" => :build
   depends_on "make" => :build
   depends_on "boost" => :build
 
-  on_linux do
-    depends_on "gcc"
-  end  
+  fails_with :clang do
+    cause "🤷"
+  end
 
   def install
     system "make", "release" if Hardware::CPU.intel?
