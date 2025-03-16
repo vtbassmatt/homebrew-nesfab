@@ -1,8 +1,9 @@
 class Nesfab < Formula
   desc "Programming language that targets the Nintendo Entertainment System"
   homepage "https://pubby.games/nesfab.html"
-  url "https://github.com/pubby/nesfab/archive/refs/tags/v1.6_mac.tar.gz"
-  sha256 "9eeeefbefeecf84837a3b7af700fad9882b28fc7b26fd4a02ec6788cd3c64836"
+  url "https://github.com/pubby/nesfab/archive/da18a43dc7b941cc4c56c949303aa37633fdc1b0.tar.gz"
+  version "1.6"
+  sha256 "bfd8c497df0d87138fda9e5de61d1ab5a36fb1951eeaed413b6619032b711745"
   license "GPL-3.0-only"
 
   depends_on "make" => :build
@@ -13,11 +14,7 @@ class Nesfab < Formula
 
   def install
     # update this when bumping package version
-    git_sha = "3aa29964"
-
-    # work around a race condition with lexer_gen
-    rm %w[src/asm_lex_tables.cpp src/ext_lex_tables.cpp src/lex_tables.cpp src/macro_lex_tables.cpp]
-    rm %w[src/asm_lex_tables.hpp src/ext_lex_tables.hpp src/lex_tables.hpp src/macro_lex_tables.hpp]
+    git_sha = "da18a43d"
 
     if OS.mac?
       system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "release" if Hardware::CPU.intel?
