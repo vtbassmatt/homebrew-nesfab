@@ -12,7 +12,7 @@ class Nesfab < Formula
     depends_on "gcc" => :build
   end
   depends_on "make" => :build
-  depends_on "boost" => :build
+  depends_on "boost"
 
   def install
     if OS.mac?
