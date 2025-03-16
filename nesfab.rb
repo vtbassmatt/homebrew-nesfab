@@ -5,19 +5,19 @@ class Nesfab < Formula
   sha256 "9eeeefbefeecf84837a3b7af700fad9882b28fc7b26fd4a02ec6788cd3c64836"
   license "GPL-3.0-only"
 
+  depends_on "make" => :build
+  depends_on "boost"
   on_linux do
     depends_on "gcc" => :build
   end
-  depends_on "make" => :build
-  depends_on "boost"
 
   def install
     # update this when bumping package version
     git_sha = "3aa29964"
 
     # work around a race condition with lexer_gen
-    rm %w( src/asm_lex_tables.cpp src/ext_lex_tables.cpp src/lex_tables.cpp src/macro_lex_tables.cpp )
-    rm %w( src/asm_lex_tables.hpp src/ext_lex_tables.hpp src/lex_tables.hpp src/macro_lex_tables.hpp )
+    rm %w[src/asm_lex_tables.cpp src/ext_lex_tables.cpp src/lex_tables.cpp src/macro_lex_tables.cpp]
+    rm %w[src/asm_lex_tables.hpp src/ext_lex_tables.hpp src/lex_tables.hpp src/macro_lex_tables.hpp]
 
     if OS.mac?
       system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "release" if Hardware::CPU.intel?
