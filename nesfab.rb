@@ -12,6 +12,8 @@ class Nesfab < Formula
   depends_on "boost"
 
   def install
+    ENV.deparallelize
+
     # update this when bumping package version
     git_sha = "3aa29964"
 
