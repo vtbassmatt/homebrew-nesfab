@@ -1,6 +1,3 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class Nesfab < Formula
   desc "Programming language that targets the Nintendo Entertainment System"
   homepage "https://pubby.games/nesfab.html"
@@ -15,12 +12,15 @@ class Nesfab < Formula
   depends_on "boost"
 
   def install
+    # update this when bumping package version
+    git_sha = "3aa29964"
+
     if OS.mac?
-      system "make", "CXX=clang++", "release" if Hardware::CPU.intel?
-      system "make", "CXX=clang++", "ARCH=", "release" if Hardware::CPU.arm?
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "release" if Hardware::CPU.intel?
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "ARCH=", "release" if Hardware::CPU.arm?
     else
-      system "make", "release" if Hardware::CPU.intel?
-      system "make", "ARCH=", "release" if Hardware::CPU.arm?
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "release" if Hardware::CPU.intel?
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "ARCH=", "release" if Hardware::CPU.arm?
     end
     bin.install "nesfab"
   end
