@@ -4,21 +4,24 @@
 class Nesfab < Formula
   desc "Programming language that targets the Nintendo Entertainment System"
   homepage "https://pubby.games/nesfab.html"
-  url "https://github.com/pubby/nesfab/archive/refs/tags/v1.6.tar.gz"
-  sha256 "c98e1de362de0503b4a3ad313ccfbf02da0e1fba8056594e942f55b361e88b09"
+  url "https://github.com/pubby/nesfab/archive/refs/tags/v1.6_mac.tar.gz"
+  sha256 "9eeeefbefeecf84837a3b7af700fad9882b28fc7b26fd4a02ec6788cd3c64836"
   license "GPL-3.0-only"
 
-  depends_on "gcc" => :build
+  on_linux do
+    depends_on "gcc" => :build
+  end
   depends_on "make" => :build
   depends_on "boost" => :build
 
-  fails_with :clang do
-    cause "🤷"
-  end
-
   def install
-    system "make", "release" if Hardware::CPU.intel?
-    system "make", "ARCH=", "release" if Hardware::CPU.arm?
+    if OS.mac?
+      system "make", "CXX=clang++", "release" if Hardware::CPU.intel?
+      system "make", "CXX=clang++", "ARCH=", "release" if Hardware::CPU.arm?
+    else
+      system "make", "release" if Hardware::CPU.intel?
+      system "make", "ARCH=", "release" if Hardware::CPU.arm?
+    end
     bin.install "nesfab"
   end
 
