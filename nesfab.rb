@@ -18,11 +18,22 @@ class Nesfab < Formula
     if OS.mac?
       system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "release" if Hardware::CPU.intel?
       system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "ARCH=", "release" if Hardware::CPU.arm?
+      bin.install "nesfab" => "nesfab-release"
+
+      system "make", "clean"
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "debug" if Hardware::CPU.intel?
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "ARCH=", "debug" if Hardware::CPU.arm?
+      bin.install "nesfab"
     else
       system "make", "GIT_COMMIT=#{git_sha}-homebrew", "release" if Hardware::CPU.intel?
       system "make", "GIT_COMMIT=#{git_sha}-homebrew", "ARCH=", "release" if Hardware::CPU.arm?
+      bin.install "nesfab" => "nesfab-release"
+
+      system "make", "clean"
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "debug" if Hardware::CPU.intel?
+      system "make", "GIT_COMMIT=#{git_sha}-homebrew", "ARCH=", "debug" if Hardware::CPU.arm?
+      bin.install "nesfab" => "nesfab"
     end
-    bin.install "nesfab"
   end
 
   test do
