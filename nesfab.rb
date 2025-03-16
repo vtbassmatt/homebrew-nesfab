@@ -12,10 +12,12 @@ class Nesfab < Formula
   depends_on "boost"
 
   def install
-    ENV.deparallelize
-
     # update this when bumping package version
     git_sha = "3aa29964"
+
+    # work around a race condition with lexer_gen
+    rm %w( src/asm_lex_tables.cpp src/ext_lex_tables.cpp src/lex_tables.cpp src/macro_lex_tables.cpp )
+    rm %w( src/asm_lex_tables.hpp src/ext_lex_tables.hpp src/lex_tables.hpp src/macro_lex_tables.hpp )
 
     if OS.mac?
       system "make", "GIT_COMMIT=#{git_sha}-homebrew", "CXX=clang++", "release" if Hardware::CPU.intel?
